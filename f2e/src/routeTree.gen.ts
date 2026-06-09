@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as pagesTodolistIndexRouteImport } from './routes/(pages)/todolist/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const pagesTodolistIndexRoute = pagesTodolistIndexRouteImport.update({
+  id: '/(pages)/todolist/',
+  path: '/todolist/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/todolist/': typeof pagesTodolistIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/todolist': typeof pagesTodolistIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(pages)/todolist/': typeof pagesTodolistIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/todolist/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/todolist'
+  id: '__root__' | '/' | '/(pages)/todolist/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  pagesTodolistIndexRoute: typeof pagesTodolistIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(pages)/todolist/': {
+      id: '/(pages)/todolist/'
+      path: '/todolist'
+      fullPath: '/todolist/'
+      preLoaderRoute: typeof pagesTodolistIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  pagesTodolistIndexRoute: pagesTodolistIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
