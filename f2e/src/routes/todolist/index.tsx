@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
-// import { TodoItem } from ""
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { Plus } from 'lucide-react'
+import { TodoItem } from '#/components/todolist'
 
-export const Route = createFileRoute('/(pages)/todolist/')({
-  component: ToDoList,
+export const Route = createFileRoute('/todolist/')({
+  component: ToDoList,  
 })
 
 // function RouteComponent() {
@@ -16,7 +16,7 @@ function ToDoList() {
 	const [input, setInput] = useState('')
 	const [list, setList] = useState<string[]>([])
 
-	// const handleChange = (e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)
 
 	const handleClick = () => {
 		if (!input.trim()) return
@@ -58,14 +58,11 @@ function ToDoList() {
 						'-z-1',
 						'opacity-80'
 					)}>
-						{/* <Image
-							src="/pic_01.jpg"
-							alt="Picture of the author"
-							fill={true}
-							className={cn(
-								'object-cover',
-							)}
-						/> */}
+            <div className={cn(
+              'object-cover'
+            )}>
+              <img src="/pic_01.jpg" alt="" />
+            </div>
 					</div>
 					<div className={cn(
 						'flex',
@@ -77,7 +74,7 @@ function ToDoList() {
 						<input
 							type="text"
 							value={input}
-							// onChange={handleChange}
+							onChange={handleChange}
 							placeholder="請輸入待辦事項"
 							className={cn(
 								'basis-full',
@@ -107,7 +104,7 @@ function ToDoList() {
 							)} />
 						</div>
 					</div>
-					{/* {
+					{
 						list.map((item, i) => (
 							<TodoItem
 								key={i}
@@ -116,7 +113,7 @@ function ToDoList() {
 								onDelete={handleDelete}
 							/>
 						))
-					} */}
+					}
 				</div>
 			</div>
 		</>
